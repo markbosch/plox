@@ -1,17 +1,17 @@
 import time
 
 from .loxcallable import LoxCallable
-from .expr import Call, ExprVisitor, Logical, Variable
+from .expr import Call, Expr, Logical, Variable
 from .loxclass import LoxClass
 from .loxfunction import Loxfunction
 from .loxinstance import LoxInstance
-from .stmt import Block, If, StmtVisitor, Var, While, Return
+from .stmt import Block, If, Stmt, Var, While, Return
 from .token import TokenType
 from .environment import Environment
 from .exception import RuntimeException
 from .returnvalue import ReturnValue
 
-class Interpreter(ExprVisitor, StmtVisitor):
+class Interpreter(Expr, Stmt):
     def __init__(self, lox):
         self.lox = lox
         self.globals = Environment()

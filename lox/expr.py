@@ -1,59 +1,6 @@
-from abc import ABC, abstractmethod
-
-class Expr(ABC):
-    @abstractmethod
+class Expr():
     def accept(self, visitor):
-        pass
-
-class ExprVisitor(ABC):
-
-    @abstractmethod
-    def visit_assign_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_binary_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_call_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_get_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_grouping_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_literal_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_logical_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_set_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_super_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_this_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_unary_expr(self, expr):
-        pass
-
-    @abstractmethod
-    def visit_variable_expr(self, expr):
-        pass
+        return getattr(self, f'visit_{type(visitor).__name__.lower()}_expr')(visitor)
 
 class Assign(Expr):
     def __init__(self, name, value):

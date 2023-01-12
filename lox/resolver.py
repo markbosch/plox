@@ -1,6 +1,6 @@
 from enum import Enum
-from .expr import Expr, ExprVisitor
-from .stmt import Stmt, StmtVisitor
+from .expr import Expr
+from .stmt import Stmt
 from .token import Token
 
 class FunctionType(Enum):
@@ -14,7 +14,7 @@ class ClassType(Enum):
     CLASS = 1,
     SUBCLASS = 2,
 
-class Resolver(ExprVisitor, StmtVisitor):
+class Resolver(Expr, Stmt):
     def __init__(self, interpreter, lox):
         self.interpreter = interpreter
         self.lox = lox
@@ -178,7 +178,10 @@ class Resolver(ExprVisitor, StmtVisitor):
         for argument in expr.arguments:
             self.resolve(argument)
 
-    def visit_group_expr(self, expr):
+    def visit_literal_expr(self, expr):
+        pass
+
+    def visit_grouping_expr(self, expr):
         self.resolve(expr.expression)
 
     def visit_logical_expr(self, expr):
@@ -211,9 +214,3 @@ class Resolver(ExprVisitor, StmtVisitor):
                 "Can't use 'this' outside of a class.")
             return
         self._resolve_local(expr, expr.keyword)
-
-    def visit_literal_expr(self, expr):
-        pass
-
-    def visit_grouping_expr(self, expr):
-        pass

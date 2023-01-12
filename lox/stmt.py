@@ -1,47 +1,6 @@
-from abc import ABC, abstractmethod
-
-class Stmt(ABC):
-    @abstractmethod
+class Stmt():
     def accept(self, visitor):
-        pass
-
-class StmtVisitor(ABC):
-
-    @abstractmethod
-    def visit_block_stmt(self, stmt):
-        pass
-
-    @abstractmethod
-    def visit_class_stmt(self, stmt):
-        pass
-
-    @abstractmethod
-    def visit_expression_stmt(self, stmt):
-        pass
-
-    @abstractmethod
-    def visit_print_stmt(self, stmt):
-        pass
-
-    @abstractmethod
-    def visit_function_stmt(self, stmt):
-        pass
-
-    @abstractmethod
-    def visit_if_stmt(self, stmt):
-        pass
-
-    @abstractmethod
-    def visit_return_stmt(self, stmt):
-        pass
-
-    @abstractmethod
-    def visit_var_stmt(self, stmt):
-        pass
-
-    @abstractmethod
-    def visit_while_stmt(self, stmt):
-        pass
+        return getattr(self, f'visit_{type(visitor).__name__.lower()}_stmt')(visitor)
 
 class Block(Stmt):
     def __init__(self, statements):
